@@ -16,6 +16,9 @@
 		5A319AA224A0E2F2004C3475 /* TemplatesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AA124A0E2F2004C3475 /* TemplatesUITests.swift */; };
 		5A319AB024A0E77B004C3475 /* UIView+Embed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */; };
 		5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AB124A0E8DD004C3475 /* ReusableView.swift */; };
+		5A319AB624A0EABC004C3475 /* MainListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AB524A0EABC004C3475 /* MainListDataSource.swift */; };
+		5A319AB924A0EB80004C3475 /* MainListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AB824A0EB80004C3475 /* MainListCell.swift */; };
+		5A8631AD24A0F46100BFAF4D /* DiffTVDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631AC24A0F46100BFAF4D /* DiffTVDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		5A319AA324A0E2F2004C3475 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Embed.swift"; sourceTree = "<group>"; };
 		5A319AB124A0E8DD004C3475 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		5A319AB524A0EABC004C3475 /* MainListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListDataSource.swift; sourceTree = "<group>"; };
+		5A319AB824A0EB80004C3475 /* MainListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCell.swift; sourceTree = "<group>"; };
+		5A8631AC24A0F46100BFAF4D /* DiffTVDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTVDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +109,6 @@
 			children = (
 				5A319A7F24A0E2F1004C3475 /* AppDelegate.swift */,
 				5A319A8124A0E2F1004C3475 /* SceneDelegate.swift */,
-				5A319A8324A0E2F1004C3475 /* MainListViewController.swift */,
 				5A319AB424A0EA15004C3475 /* Examples */,
 				5A319AB324A0E9E6004C3475 /* UIKit+Extensions */,
 				5A319A8824A0E2F2004C3475 /* Assets.xcassets */,
@@ -136,6 +141,7 @@
 			children = (
 				5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */,
 				5A319AB124A0E8DD004C3475 /* ReusableView.swift */,
+				5A8631AC24A0F46100BFAF4D /* DiffTVDataSource.swift */,
 			);
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
@@ -143,8 +149,19 @@
 		5A319AB424A0EA15004C3475 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				5A319AB724A0EB6C004C3475 /* MainList */,
 			);
 			path = Examples;
+			sourceTree = "<group>";
+		};
+		5A319AB724A0EB6C004C3475 /* MainList */ = {
+			isa = PBXGroup;
+			children = (
+				5A319A8324A0E2F1004C3475 /* MainListViewController.swift */,
+				5A319AB524A0EABC004C3475 /* MainListDataSource.swift */,
+				5A319AB824A0EB80004C3475 /* MainListCell.swift */,
+			);
+			path = MainList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,7 +296,10 @@
 			files = (
 				5A319A8424A0E2F1004C3475 /* MainListViewController.swift in Sources */,
 				5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */,
+				5A8631AD24A0F46100BFAF4D /* DiffTVDataSource.swift in Sources */,
 				5A319A8024A0E2F1004C3475 /* AppDelegate.swift in Sources */,
+				5A319AB624A0EABC004C3475 /* MainListDataSource.swift in Sources */,
+				5A319AB924A0EB80004C3475 /* MainListCell.swift in Sources */,
 				5A319A8224A0E2F1004C3475 /* SceneDelegate.swift in Sources */,
 				5A319AB024A0E77B004C3475 /* UIView+Embed.swift in Sources */,
 			);

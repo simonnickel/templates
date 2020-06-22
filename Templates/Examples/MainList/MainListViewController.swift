@@ -8,11 +8,16 @@
 
 import UIKit
 
-class MainListViewController: UIViewController {
+class MainListViewController: UITableViewController {
+
+	var dataSource: MainListDataSource?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
+
+		MainListItem.registerCells(in: tableView)
+		dataSource = MainListDataSource(tableView: tableView)
+		dataSource?.reload()
 	}
 
 }
