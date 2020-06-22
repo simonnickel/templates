@@ -48,18 +48,21 @@ class MainListCell: UITableViewCell {
 		let view = UIStackView(arrangedSubviews: [labelTitle, labelSubtitle])
 		view.axis = .vertical
 		view.alignment = .leading
+		view.spacing = 5
 		return view
 	}()
 
 	private lazy var labelTitle: UILabel = {
 		let view = UILabel()
 		view.font = UIFont.dynamic(.text)
+		view.textColor = UIColor.dynamic(.accent)
 		return view
 	}()
 
 	private lazy var labelSubtitle: UILabel = {
 		let view = UILabel()
 		view.font = UIFont.dynamic(.subtext)
+		view.textColor = UIColor.dynamic(.text)
 		return view
 	}()
 

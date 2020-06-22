@@ -11,18 +11,17 @@ import UIKit
 
 extension UIFont {
 
-	enum Font {
+	enum SemanticFont {
 		case text, subtext
 	}
 
-	static func dynamic(_ font: Font) -> UIFont {
+	static func dynamic(_ font: SemanticFont) -> UIFont {
 		switch font {
 			
-			case .text:
-				return UIFont.preferredFont(forTextStyle: .body)
+			case .text: return UIFont.preferredFont(forTextStyle: .body)
 
-			case .subtext:
-				return UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .light))
+			case .subtext: return UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .light))
+
 		}
 	}
 }
