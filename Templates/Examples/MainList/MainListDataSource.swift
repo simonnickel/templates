@@ -20,7 +20,8 @@ enum MainListItem: DiffTVDataSourceItem {
 				return cell
 			case .entry(let title):
 				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
-				cell.textLabel?.text = title
+				cell.title = title
+				cell.subtitle = "Some Subtitle"
 				return cell
 		}
 	}

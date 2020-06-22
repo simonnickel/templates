@@ -19,6 +19,5 @@ class MainListViewController: UITableViewController {
 		dataSource = MainListDataSource(tableView: tableView)
 		dataSource?.reload()
 	}
-
 }
 
