@@ -15,6 +15,7 @@
 		5A319A9724A0E2F2004C3475 /* TemplatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319A9624A0E2F2004C3475 /* TemplatesTests.swift */; };
 		5A319AA224A0E2F2004C3475 /* TemplatesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AA124A0E2F2004C3475 /* TemplatesUITests.swift */; };
 		5A319AB024A0E77B004C3475 /* UIView+Embed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */; };
+		5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319AB124A0E8DD004C3475 /* ReusableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		5A319AA124A0E2F2004C3475 /* TemplatesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesUITests.swift; sourceTree = "<group>"; };
 		5A319AA324A0E2F2004C3475 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Embed.swift"; sourceTree = "<group>"; };
+		5A319AB124A0E8DD004C3475 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				5A319A8A24A0E2F2004C3475 /* LaunchScreen.storyboard */,
 				5A319A8D24A0E2F2004C3475 /* Info.plist */,
 				5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */,
+				5A319AB124A0E8DD004C3475 /* ReusableView.swift */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A319A8424A0E2F1004C3475 /* ViewController.swift in Sources */,
+				5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */,
 				5A319A8024A0E2F1004C3475 /* AppDelegate.swift in Sources */,
 				5A319A8224A0E2F1004C3475 /* SceneDelegate.swift in Sources */,
 				5A319AB024A0E77B004C3475 /* UIView+Embed.swift in Sources */,
