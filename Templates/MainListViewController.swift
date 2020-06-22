@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainListViewController.swift
 //  Templates
 //
 //  Created by simonnickel on 22.06.20.
@@ -8,14 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainListViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
-		// Do any additional setup after loading the view.
 	}
-
 
 }
 
