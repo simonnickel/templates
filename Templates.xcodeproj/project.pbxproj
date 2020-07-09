@@ -22,6 +22,7 @@
 		5A8631B024A0F94000BFAF4D /* BaseTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631AF24A0F94000BFAF4D /* BaseTVCell.swift */; };
 		5A8631B324A1019B00BFAF4D /* UIFont+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */; };
 		5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */; };
+		5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6B32424B78AAE0010420F /* UIButton+Action.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5A8631AF24A0F94000BFAF4D /* BaseTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTVCell.swift; sourceTree = "<group>"; };
 		5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Definitions.swift"; sourceTree = "<group>"; };
 		5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Definitions.swift"; sourceTree = "<group>"; };
+		5AB6B32424B78AAE0010420F /* UIButton+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Action.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				5A319AAF24A0E77B004C3475 /* UIView+Embed.swift */,
 				5A319AB124A0E8DD004C3475 /* ReusableView.swift */,
 				5A8631AC24A0F46100BFAF4D /* DiffTVDataSource.swift */,
+				5AB6B32424B78AAE0010420F /* UIButton+Action.swift */,
 			);
 			path = "UIKit+Extensions";
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 			files = (
 				5A319A8424A0E2F1004C3475 /* MainListViewController.swift in Sources */,
 				5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */,
+				5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */,
 				5A8631B324A1019B00BFAF4D /* UIFont+Definitions.swift in Sources */,
 				5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */,
 				5A8631AD24A0F46100BFAF4D /* DiffTVDataSource.swift in Sources */,
