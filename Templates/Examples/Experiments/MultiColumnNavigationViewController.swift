@@ -13,7 +13,8 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	private struct Constants {
 		static let animationDuration: TimeInterval = 0.5
-		static let maxColumns: Int = 3
+		static let maxColumns: Int = 4
+		static let minColumnWidth: CGFloat = 300
 	}
 	
 	override func viewDidLoad() {
@@ -24,12 +25,13 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		add(ColumnViewController(style: .insetGrouped))
 	}
 	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		updateVisibility()
+	}
 	
-	// MARK: - Add
 	
-	private var columnsAll: [ColumnNavigationController] = []
-	private var columnsVisible: [ColumnNavigationController] = []
-	private var columnsHidden: [ColumnNavigationController] = []
+	// MARK: - ColumnNavigationDelegate
 	
 	func add(_ viewController: UIViewController, from indexFrom: Int? = nil) {
 		let index = indexFrom ?? 0
@@ -40,6 +42,19 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		append(createColumn(with: viewController))
 		updateVisibility()
     }
+	
+	func pop() {
+		guard let columnTop = columnsVisible.last else { return }
+		pop(columnTop)
+		updateVisibility()
+	}
+	
+	
+	// MARK: - Add
+	
+	private var columnsAll: [ColumnNavigationController] = []
+	private var columnsVisible: [ColumnNavigationController] = []
+	private var columnsHidden: [ColumnNavigationController] = []
 	
     private func append(_ column: ColumnNavigationController) {
 		columnsAll.append(column)
@@ -53,15 +68,29 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	// MARK: - Collapse / Expand
 	
+	var maxColumns: Int {
+		let fittingWidth: Double = Double(view.bounds.width / Constants.minColumnWidth)
+		return min(Constants.maxColumns, Int(fittingWidth.rounded(.down)))
+	}
+	
 	private func updateVisibility() {
-		while columnsVisible.count > Constants.maxColumns || (columnsVisible.count < Constants.maxColumns && columnsHidden.count != 0) {
-			if columnsVisible.count < Constants.maxColumns {
+		let maxColumns = self.maxColumns
+		while columnsVisible.count > maxColumns || (columnsVisible.count < maxColumns && columnsHidden.count != 0) {
+			if columnsVisible.count < maxColumns {
 				expandFirst()
 			} else {
 				collapseFirst()
 			}
 		}
+//		buildNavigationBackStack()
 	}
+	
+//	private func buildNavigationBackStack() {
+//		guard let firstVisible = columnsVisible.first else { return }
+//		let viewControllers: [UIViewController] = columnsHidden.flatMap({ $0.viewControllers }) + firstVisible.viewControllers
+//		viewControllers.last?.navigationItem.hidesBackButton = false
+//		firstVisible.setViewControllers(viewControllers, animated: false)
+//	}
 	
 	private func collapseFirst() {
 		guard let column = columnsVisible.first else { return }
@@ -70,9 +99,19 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	}
 	
 	private func expandFirst() {
-		guard let column = columnsHidden.last else { return }
+		guard let columnToShow = columnsHidden.last else { return }
 		columnsHidden.removeLast()
-		addToContainer(column, at: .first)
+		
+		// Move navigation stack from first visible column to new column.
+//		guard let columnVisibleFirst = columnsVisible.first else { return }
+//		var navigationStack = columnVisibleFirst.viewControllers
+//		let navigationStackFirst = navigationStack.removeLast()
+//		navigationStack.last?.navigationItem.hidesBackButton = false
+//		columnToShow.setViewControllers(navigationStack, animated: false)
+//		navigationStackFirst.navigationItem.hidesBackButton = true
+//		columnVisibleFirst.setViewControllers([navigationStackFirst], animated: false)
+		
+		addToContainer(columnToShow, at: .first)
 	}
 	
 	
@@ -85,7 +124,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 			}
 		}
 	}
-
+	
     private func pop(_ column: ColumnNavigationController) {
 		guard column.parent != nil else { return }
 
@@ -170,6 +209,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 
 protocol ColumnNavigationDelegate: class {
 	func add(_ viewController: UIViewController, from index: Int?)
+	func pop()
 }
 
 
@@ -189,4 +229,11 @@ class ColumnNavigationController: UINavigationController {
 		}
 	}
 
+	override func popViewController(animated: Bool) -> UIViewController? {
+//		super.popViewController(animated: animated)
+		
+		columnDelegate?.pop()
+		
+		return nil
+	}
 }

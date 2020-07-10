@@ -16,6 +16,8 @@ class ColumnViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		clearsSelectionOnViewWillAppear = false
+		
 		dataSource = ColumnListDataSource(tableView: tableView)
 		dataSource?.column = (navigationController as? ColumnNavigationController)?.columnIndex ?? 0
 		dataSource?.reload()
@@ -52,7 +54,7 @@ enum ColumnListItem: DiffTVDataSourceItem {
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
 		cell.textLabel?.text = "\(title)"
-		cell.contentView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+		cell.contentView.heightAnchor.constraint(equalToConstant: 260).isActive = true
 		
 		switch self {
 			case .openDetail(_): cell.accessoryType = .disclosureIndicator
@@ -76,7 +78,14 @@ class ColumnListDataSource: DiffTVDataSource<String, ColumnListItem> {
 	override func snapshot() -> ColumnListDataSourceSnapshot {
 		var snapshot = ColumnListDataSourceSnapshot()
 		snapshot.appendSections(["Section 1"])
-		snapshot.appendItems([.openDetail(i: 1), .openDetail(i: 2)], toSection: "Section 1")
+		snapshot.appendItems([.openDetail(i: 1),
+							  .openDetail(i: 2),
+							  .openDetail(i: 3),
+							  .openDetail(i: 4),
+							  .openDetail(i: 5),
+							  .openDetail(i: 6),
+							  .openDetail(i: 7)
+		], toSection: "Section 1")
 		
 		snapshot.appendSections(["Section 2"])
 		snapshot.appendItems([.openModal(i: column)], toSection: "Section 2")
