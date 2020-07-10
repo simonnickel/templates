@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+// TODO: Keep ScrollView State on collapse and expand. State Restoration?
+// TODO: Handle back navigation.
+
 class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
 	private struct Constants {
@@ -50,11 +53,14 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	}
 	
 	
-	// MARK: - Add
+	// MARK: - Column Handling
 	
 	private var columnsAll: [ColumnNavigationController] = []
 	private var columnsVisible: [ColumnNavigationController] = []
 	private var columnsHidden: [ColumnNavigationController] = []
+	
+	
+	// MARK: Add
 	
     private func append(_ column: ColumnNavigationController) {
 		columnsAll.append(column)
@@ -63,6 +69,27 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
         addChild(column)
 		addToContainer(column)
         column.didMove(toParent: self)
+    }
+	
+	
+	// MARK: Remove
+	
+	private func removeColumns(after index: Int) {
+		if index < columnsAll.count {
+			for column in columnsAll[index...] {
+				pop(column)
+			}
+		}
+	}
+	
+    private func pop(_ column: ColumnNavigationController) {
+		guard column.parent != nil else { return }
+
+		columnsAll.removeAll(where: { $0 == column })
+		
+		column.willMove(toParent: nil)
+		removeFromContainer(column)
+		column.removeFromParent()
     }
 	
 	
@@ -120,27 +147,6 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		navigationStackFirst.navigationItem.hidesBackButton = true
 		columnVisibleFirst.setViewControllers([navigationStackFirst], animated: false)
 	}
-	
-	
-	// MARK: - Remove
-	
-	private func removeColumns(after index: Int) {
-		if index < columnsAll.count {
-			for column in columnsAll[index...] {
-				pop(column)
-			}
-		}
-	}
-	
-    private func pop(_ column: ColumnNavigationController) {
-		guard column.parent != nil else { return }
-
-		columnsAll.removeAll(where: { $0 == column })
-		
-		column.willMove(toParent: nil)
-		removeFromContainer(column)
-		column.removeFromParent()
-    }
 	
 	
 	// MARK: - Container
