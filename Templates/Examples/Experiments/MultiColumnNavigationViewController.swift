@@ -13,6 +13,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	private struct Constants {
 		static let animationDuration: TimeInterval = 0.5
+		static let maxColumns: Int = 3
 	}
 	
 	override func viewDidLoad() {
@@ -24,13 +25,11 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	}
 	
 	
-	let numberOfColumns: Int = 5
-	
-	
 	// MARK: - Add
 	
 	private var columnsAll: [ColumnNavigationController] = []
 	private var columnsVisible: [ColumnNavigationController] = []
+	private var columnsHidden: [ColumnNavigationController] = []
 	
 	func add(_ viewController: UIViewController, from indexFrom: Int? = nil) {
 		let index = indexFrom ?? 0
@@ -55,18 +54,24 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	// MARK: - Collapse / Expand
 	
 	private func updateVisibility() {
-//		collapseFirst()
+		while columnsVisible.count > Constants.maxColumns || (columnsVisible.count < Constants.maxColumns && columnsHidden.count != 0) {
+			if columnsVisible.count < Constants.maxColumns {
+				expandFirst()
+			} else {
+				collapseFirst()
+			}
+		}
 	}
 	
 	private func collapseFirst() {
-		guard columnsAll.count >= numberOfColumns else { return }
-		guard let column = columnsAll.first else { return }
+		guard let column = columnsVisible.first else { return }
+		columnsHidden.append(column)
 		removeFromContainer(column)
 	}
 	
 	private func expandFirst() {
-		guard columnsAll.count >= numberOfColumns else { return }
-		guard let column = columnsAll.first else { return }
+		guard let column = columnsHidden.last else { return }
+		columnsHidden.removeLast()
 		addToContainer(column, at: .first)
 	}
 	
@@ -98,7 +103,11 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	}
 	
 	private func addToContainer(_ column: ColumnNavigationController, at position: ContainerPosition = .last, animated: Bool = true) {
-		columnsVisible.append(column)
+		switch position {
+			case .first: columnsVisible.insert(column, at: 0)
+			case .last: columnsVisible.append(column)
+		}
+		
 		if animated {
 			column.view.isHidden = true
 			addToContainer(column.view, at: position)
