@@ -11,6 +11,10 @@ import UIKit
 
 class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
+	private struct Constants {
+		static let animationDuration: TimeInterval = 0.5
+	}
+	
 	override func viewDidLoad() {
 		view.backgroundColor = .white
 		super.viewDidLoad()
@@ -18,6 +22,9 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		setupView()
 		add(ColumnViewController(style: .insetGrouped))
 	}
+	
+	
+	let numberOfColumns: Int = 5
 	
 	
 	// MARK: - Add
@@ -29,21 +36,29 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		guard index <= columnNavs.count else {
 			fatalError()
 		}
-		
 		removeColumns(after: index)
+		viewController.title = "Column \(columnNavs.count)"
 		append(createColumn(with: viewController))
+		collapse()
     }
 	
     private func append(_ column: ColumnNavigationController) {
-		column.topViewController?.title = "Column \(columnNavs.count)"
-		
 		columnNavs.append(column)
 		column.columnIndex = columnNavs.count
 		
         addChild(column)
-		containerStack.addArrangedSubview(column.view)
+		addToContainer(column)
         column.didMove(toParent: self)
     }
+	
+	
+	// MARK: - Collapse
+	
+	private func collapse() {
+		guard columnNavs.count >= numberOfColumns else { return }
+		guard let column = columnNavs.first else { return }
+//		removeFromContainer(column)
+	}
 	
 	
 	// MARK: - Remove
@@ -51,12 +66,12 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	private func removeColumns(after index: Int) {
 		if index < columnNavs.count {
 			for column in columnNavs[index...] {
-				remove(column)
+				pop(column)
 			}
 		}
 	}
 
-    private func remove(_ column: ColumnNavigationController) {
+    private func pop(_ column: ColumnNavigationController) {
 		guard column.parent != nil,
 			let index = columnNavs.firstIndex(of: column)
 			else { return }
@@ -64,9 +79,39 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		columnNavs.remove(at: index)
 		
 		column.willMove(toParent: nil)
-		column.view.removeFromSuperview()
+		removeFromContainer(column)
 		column.removeFromParent()
     }
+	
+	
+	// MARK: - Container
+	
+	private func addToContainer(_ column: ColumnNavigationController, animated: Bool = true) {
+		if animated {
+			column.view.isHidden = true
+			containerStack.addArrangedSubview(column.view)
+			containerStack.layoutIfNeeded()
+			UIView.animate(withDuration: Constants.animationDuration, animations: {
+				column.view.isHidden = false
+				self.containerStack.layoutIfNeeded()
+			})
+		} else {
+			containerStack.addArrangedSubview(column.view)
+		}
+	}
+	
+	private func removeFromContainer(_ column: ColumnNavigationController, animated: Bool = true) {
+		if animated {
+			UIView.animate(withDuration: Constants.animationDuration, animations: {
+				column.view.isHidden = true
+				self.containerStack.layoutIfNeeded()
+			}) { _ in
+				self.containerStack.removeArrangedSubview(column.view)
+			}
+		} else {
+			containerStack.removeArrangedSubview(column.view)
+		}
+	}
 	
 	
 	// MARK: - Setup View

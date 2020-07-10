@@ -41,7 +41,7 @@ enum ColumnListItem: DiffTVDataSourceItem {
 	
 	var title: String {
 		switch self {
-			case .openModal: return "Modal"
+			case .openModal: return "Modal \(Int.random(in: 0...20))"
 			case .openDetail(let i): return "Detail \(i)"
 		}
 	}
