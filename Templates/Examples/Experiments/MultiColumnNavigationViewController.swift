@@ -11,6 +11,7 @@ import UIKit
 
 // TODO: Keep ScrollView State on collapse and expand. State Restoration?
 // TODO: Handle iOS 14 back navigation to specific item.
+// TODO: Handle iPhone swipe back navigation.
 
 class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
@@ -87,10 +88,6 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 
 		columnsAll.removeAll(where: { $0 == column })
 		
-		if column.viewControllers.count > 1, let lastHidden = columnsHidden.last {
-			moveNavigationStack(to: lastHidden)
-		}
-		
 		column.willMove(toParent: nil)
 		removeFromContainer(column)
 		column.removeFromParent()
@@ -113,43 +110,35 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 				collapseFirst()
 			}
 		}
-		buildNavigationStack()
 	}
 	
 	private func collapseFirst() {
-		guard let column = columnsVisible.first else { return }
-		columnsHidden.append(column)
-		removeFromContainer(column)
+		guard let visibleFirst = columnsVisible.first else { return }
+		columnsHidden.append(visibleFirst)
+		removeFromContainer(visibleFirst)
+		
+		guard let hiddenLast = columnsHidden.last, let visibleFirstNew = columnsVisible.first else { return }
+		let viewControllers: [UIViewController] = hiddenLast.viewControllers + visibleFirstNew.viewControllers
+		viewControllers.last?.navigationItem.hidesBackButton = false
+		visibleFirstNew.setViewControllers(viewControllers, animated: false)
 	}
 	
 	private func expandFirst() {
 		guard let columnToShow = columnsHidden.last else { return }
 		columnsHidden.removeLast()
-		moveNavigationStack(to: columnToShow)
+		
+		if let columnVisibleFirst = columnsVisible.first {
+			var navigationStack = columnVisibleFirst.viewControllers
+			let navigationStackFirst = navigationStack.removeLast()
+			navigationStack.last?.navigationItem.hidesBackButton = false
+			
+			columnToShow.setViewControllers(navigationStack, animated: false)
+			
+			navigationStackFirst.navigationItem.hidesBackButton = true
+			columnVisibleFirst.setViewControllers([navigationStackFirst], animated: false)
+		}
+		
 		addToContainer(columnToShow, at: .first)
-	}
-	
-	
-	// MARK: - Navigation
-	
-	private func buildNavigationStack() {
-		guard let firstVisible = columnsVisible.first else { return }
-		let viewControllers: [UIViewController] = columnsHidden.flatMap({ $0.viewControllers }) + firstVisible.viewControllers
-		viewControllers.last?.navigationItem.hidesBackButton = false
-		firstVisible.setViewControllers(viewControllers, animated: false)
-	}
-	
-	private func moveNavigationStack(to column: ColumnNavigationController) {
-		guard let columnVisibleFirst = columnsVisible.first else { return }
-		
-		var navigationStack = columnVisibleFirst.viewControllers
-		let navigationStackFirst = navigationStack.removeLast()
-		navigationStack.last?.navigationItem.hidesBackButton = false
-		
-		column.setViewControllers(navigationStack, animated: false)
-		
-		navigationStackFirst.navigationItem.hidesBackButton = true
-		columnVisibleFirst.setViewControllers([navigationStackFirst], animated: false)
 	}
 	
 	

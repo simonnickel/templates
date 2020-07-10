@@ -54,7 +54,7 @@ enum ColumnListItem: DiffTVDataSourceItem {
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
 		cell.textLabel?.text = "\(title)"
-		cell.contentView.heightAnchor.constraint(equalToConstant: 260).isActive = true
+		cell.contentView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 		
 		switch self {
 			case .openDetail(_): cell.accessoryType = .disclosureIndicator
