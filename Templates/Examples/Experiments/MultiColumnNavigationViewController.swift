@@ -12,6 +12,7 @@ import UIKit
 // TODO: Keep ScrollView State on collapse and expand. State Restoration?
 // TODO: Handle iOS 14 back navigation to specific item.
 // TODO: Handle iPhone swipe back navigation.
+// TODO: Handle single column native push animation.
 
 class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
@@ -36,6 +37,8 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	
 	// MARK: - ColumnNavigationDelegate
+	
+	var shouldHandleNavigation: Bool { maxColumns > 1 }
 	
 	func add(_ viewController: UIViewController, from indexFrom: Int? = nil) {
 		let index = indexFrom ?? 0
@@ -229,6 +232,8 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 // MARK: - ColumnNavigationDelegate
 
 protocol ColumnNavigationDelegate: class {
+	var shouldHandleNavigation: Bool { get }
+	
 	func add(_ viewController: UIViewController, from index: Int?)
 	func pop()
 }
@@ -242,7 +247,8 @@ class ColumnNavigationController: UINavigationController {
 	var columnIndex: Int = 0
 	
 	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-		if let delegate = columnDelegate {
+		// TODO: Handle unwrapping the navigation stack to allow native push animation.
+		if let delegate = columnDelegate { //, delegate.shouldHandleNavigation {
 			// TODO: Handle animated == false
 			delegate.add(viewController, from: columnIndex)
 		} else {
@@ -251,7 +257,12 @@ class ColumnNavigationController: UINavigationController {
 	}
 
 	override func popViewController(animated: Bool) -> UIViewController? {
-		columnDelegate?.pop()
-		return nil
+		// TODO: Handle removing the ColumnNavigationController native back navigation to allow native pop animation.
+		if let delegate = columnDelegate {//, delegate.shouldHandleNavigation {
+			delegate.pop()
+			return nil
+		} else {
+			return super.popViewController(animated: animated)
+		}
 	}
 }
