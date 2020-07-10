@@ -49,6 +49,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	func pop() {
 		guard let columnTop = columnsVisible.last else { return }
+		moveNavigationStackBeforeExpand()
 		pop(columnTop)
 		updateVisibility()
 	}
@@ -147,7 +148,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		guard let visibleFirstViewController = navigationStack.popLast() else { return }
 		
 		navigationStack.last?.navigationItem.hidesBackButton = false
-		hiddenLast.setViewControllers(navigationStack, animated: false)
+		hiddenLast.setViewControllers(navigationStack + hiddenLast.viewControllers, animated: false)
 		
 		visibleFirstViewController.navigationItem.hidesBackButton = true
 		visibleFirst.setViewControllers([visibleFirstViewController], animated: false)
