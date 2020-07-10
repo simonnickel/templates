@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MultiColumnNavigationViewController: UIViewController {
+class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
 	override func viewDidLoad() {
 		view.backgroundColor = .white
@@ -18,14 +18,14 @@ class MultiColumnNavigationViewController: UIViewController {
 		setupView()
 		
 		add(ColumnViewController())
-		add(ColumnViewController())
 	}
 	
 	
 	// MARK: - Add / Remove
 	
 	func add(_ viewController: UIViewController) {
-		let navigation = UINavigationController(rootViewController: viewController)
+		let navigation = ColumnNavigatonController(rootViewController: viewController)
+		navigation.columnDelegate = self
         add(child: navigation)
     }
 	
@@ -62,13 +62,21 @@ class MultiColumnNavigationViewController: UIViewController {
 	}
 }
 
-protocol SingleColumnNavigation
+protocol ColumnNavigationDelegate: class {
+	func add(_ viewController: UIViewController)
+}
 
-class SingleColumnNavigatonController: UINavigationController {
+class ColumnNavigatonController: UINavigationController {
 	
-	var delegate:
+	weak var columnDelegate: ColumnNavigationDelegate?
 	
-	override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-		<#code#>
+	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+		if let delegate = columnDelegate {
+			// TODO: Handle animated == false
+			delegate.add(viewController)
+		} else {
+			super.pushViewController(viewController, animated: animated)
+		}
 	}
+
 }

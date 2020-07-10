@@ -26,6 +26,7 @@ class ColumnViewController: UITableViewController {
 			else { return }
 		
 		let viewController = ColumnViewController()
+		viewController.title = item.title
 		switch item {
 			case .openModal: present(viewController, animated: true)
 			case .openDetail: navigationController?.pushViewController(viewController, animated: true)
@@ -38,20 +39,20 @@ class ColumnViewController: UITableViewController {
 // MARK: - Data Source
 
 enum ColumnListItem: DiffTVDataSourceItem {
-	case openModal, openDetail
+	case openModal, openDetail(i: Int)
 	
 	var title: String {
 		switch self {
-			case .openModal: return "Open Modal"
-			case .openDetail: return "Open Detail"
+			case .openModal: return "Modal"
+			case .openDetail(let i): return "Detail \(i)"
 		}
 	}
 
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
-		cell.textLabel?.text = title
+		cell.textLabel?.text = "Open \(title)"
 		
-		if self == .openDetail {
+		if self != .openModal {
 			cell.accessoryType = .disclosureIndicator
 		}
 		return cell
@@ -71,7 +72,7 @@ class ColumnListDataSource: DiffTVDataSource<String, ColumnListItem> {
 	override func snapshot() -> ColumnListDataSourceSnapshot {
 		var snapshot = ColumnListDataSourceSnapshot()
 		snapshot.appendSections(["Section 1"])
-		snapshot.appendItems([.openDetail, .openModal], toSection: "Section 1")
+		snapshot.appendItems([.openDetail(i: 1), .openDetail(i: 2), .openModal], toSection: "Section 1")
 
 		return snapshot
 	}
