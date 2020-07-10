@@ -117,28 +117,40 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		columnsHidden.append(visibleFirst)
 		removeFromContainer(visibleFirst)
 		
-		guard let hiddenLast = columnsHidden.last, let visibleFirstNew = columnsVisible.first else { return }
-		let viewControllers: [UIViewController] = hiddenLast.viewControllers + visibleFirstNew.viewControllers
-		viewControllers.last?.navigationItem.hidesBackButton = false
-		visibleFirstNew.setViewControllers(viewControllers, animated: false)
+		moveNavigationStackAfterCollapse()
 	}
 	
 	private func expandFirst() {
 		guard let columnToShow = columnsHidden.last else { return }
+		
+		moveNavigationStackBeforeExpand()
+		
 		columnsHidden.removeLast()
-		
-		if let columnVisibleFirst = columnsVisible.first {
-			var navigationStack = columnVisibleFirst.viewControllers
-			let navigationStackFirst = navigationStack.removeLast()
-			navigationStack.last?.navigationItem.hidesBackButton = false
-			
-			columnToShow.setViewControllers(navigationStack, animated: false)
-			
-			navigationStackFirst.navigationItem.hidesBackButton = true
-			columnVisibleFirst.setViewControllers([navigationStackFirst], animated: false)
-		}
-		
 		addToContainer(columnToShow, at: .first)
+	}
+	
+	
+	// MARK: - Navigation Stack
+	
+	private func moveNavigationStackAfterCollapse() {
+		guard let hiddenLast = columnsHidden.last, let visibleFirst = columnsVisible.first else { return }
+		let viewControllers: [UIViewController] = hiddenLast.viewControllers + visibleFirst.viewControllers
+		viewControllers.last?.navigationItem.hidesBackButton = false
+		visibleFirst.setViewControllers(viewControllers, animated: false)
+	}
+	
+	private func moveNavigationStackBeforeExpand() {
+		guard let hiddenLast = columnsHidden.last, let visibleFirst = columnsVisible.first
+			else { return }
+		
+		var navigationStack = visibleFirst.viewControllers
+		guard let visibleFirstViewController = navigationStack.popLast() else { return }
+		
+		navigationStack.last?.navigationItem.hidesBackButton = false
+		hiddenLast.setViewControllers(navigationStack, animated: false)
+		
+		visibleFirstViewController.navigationItem.hidesBackButton = true
+		visibleFirst.setViewControllers([visibleFirstViewController], animated: false)
 	}
 	
 	
