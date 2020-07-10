@@ -24,7 +24,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	// MARK: - Add / Remove
 	
 	func add(_ viewController: UIViewController) {
-		let navigation = ColumnNavigatonController(rootViewController: viewController)
+		let navigation = ColumnNavigationController(rootViewController: viewController)
 		navigation.columnDelegate = self
         add(child: navigation)
     }
@@ -66,7 +66,7 @@ protocol ColumnNavigationDelegate: class {
 	func add(_ viewController: UIViewController)
 }
 
-class ColumnNavigatonController: UINavigationController {
+class ColumnNavigationController: UINavigationController {
 	
 	weak var columnDelegate: ColumnNavigationDelegate?
 	
