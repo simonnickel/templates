@@ -87,6 +87,10 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 
 		columnsAll.removeAll(where: { $0 == column })
 		
+		if column.viewControllers.count > 1, let lastHidden = columnsHidden.last {
+			moveNavigationStack(to: lastHidden)
+		}
+		
 		column.willMove(toParent: nil)
 		removeFromContainer(column)
 		column.removeFromParent()
