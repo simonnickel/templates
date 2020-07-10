@@ -16,6 +16,14 @@ typealias Action = () -> Void
 
 class ActionUIButton: UIButton {
 	
+	// UIButton has weird initialiser ...
+	static func create(type buttonType: UIButton.ButtonType, action actionClosure: @escaping Action) -> UIButton {
+		let button = ActionUIButton(type: buttonType)
+		button.actionTouchUp = actionClosure
+		button.addTarget(button, action: #selector(touchInside), for: .touchUpInside)
+		return button
+	}
+	
 	open class func systemButton(with image: UIImage, action actionClosure: @escaping Action) -> ActionUIButton {
 		let button = ActionUIButton.systemButton(with: image, target: self, action: #selector(touchInside))
 		button.actionTouchUp = actionClosure
