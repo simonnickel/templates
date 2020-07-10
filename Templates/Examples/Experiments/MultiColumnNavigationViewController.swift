@@ -37,7 +37,6 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 			fatalError()
 		}
 		removeColumns(after: index)
-		viewController.title = "Column \(columnNavs.count)"
 		append(createColumn(with: viewController))
 		collapse()
     }
