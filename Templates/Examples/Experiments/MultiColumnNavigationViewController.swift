@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // TODO: Keep ScrollView State on collapse and expand. State Restoration?
-// TODO: Handle back navigation.
+// TODO: Handle iOS 14 back navigation to specific item.
 
 class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDelegate {
 	
@@ -154,6 +154,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	
 	
 	// MARK: - Container
+	
 	enum ContainerPosition {
 		case first, last
 	}
@@ -176,6 +177,7 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 			addToContainer(column.view, at: position)
 		}
 	}
+	
 	private func addToContainer(_ view: UIView, at position: ContainerPosition = .last) {
 		switch position {
 			case .first: containerStack.insertArrangedSubview(view, at: 0)
@@ -247,10 +249,7 @@ class ColumnNavigationController: UINavigationController {
 	}
 
 	override func popViewController(animated: Bool) -> UIViewController? {
-//		super.popViewController(animated: animated)
-		
 		columnDelegate?.pop()
-		
 		return nil
 	}
 }
