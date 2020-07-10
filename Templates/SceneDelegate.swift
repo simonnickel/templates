@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		window = UIWindow(windowScene: windowScene)
-		window?.rootViewController = MainListViewController(style: .insetGrouped)
+		window?.rootViewController = ColumnNavigationViewController()
+			//MainListViewController(style: .insetGrouped)
 		window?.makeKeyAndVisible()
 	}
 

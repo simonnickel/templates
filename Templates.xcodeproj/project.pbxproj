@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A251FDA24B897C40018B99F /* ColumnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A251FD924B897C40018B99F /* ColumnViewController.swift */; };
 		5A319A8024A0E2F1004C3475 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319A7F24A0E2F1004C3475 /* AppDelegate.swift */; };
 		5A319A8224A0E2F1004C3475 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319A8124A0E2F1004C3475 /* SceneDelegate.swift */; };
 		5A319A8424A0E2F1004C3475 /* MainListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A319A8324A0E2F1004C3475 /* MainListViewController.swift */; };
@@ -22,6 +23,7 @@
 		5A8631B024A0F94000BFAF4D /* BaseTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631AF24A0F94000BFAF4D /* BaseTVCell.swift */; };
 		5A8631B324A1019B00BFAF4D /* UIFont+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */; };
 		5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */; };
+		5AB6B32324B787A20010420F /* ColumnNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6B32224B787A20010420F /* ColumnNavigationViewController.swift */; };
 		5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6B32424B78AAE0010420F /* UIButton+Action.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A251FD924B897C40018B99F /* ColumnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnViewController.swift; sourceTree = "<group>"; };
 		5A319A7C24A0E2F1004C3475 /* Templates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Templates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A319A7F24A0E2F1004C3475 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A319A8124A0E2F1004C3475 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		5A8631AF24A0F94000BFAF4D /* BaseTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTVCell.swift; sourceTree = "<group>"; };
 		5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Definitions.swift"; sourceTree = "<group>"; };
 		5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Definitions.swift"; sourceTree = "<group>"; };
+		5AB6B32224B787A20010420F /* ColumnNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColumnNavigationViewController.swift; path = ../ColumnNavigationViewController.swift; sourceTree = "<group>"; };
 		5AB6B32424B78AAE0010420F /* UIButton+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Action.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +96,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A251FD824B8823A0018B99F /* ColumnNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				5AB6B32224B787A20010420F /* ColumnNavigationViewController.swift */,
+				5A251FD924B897C40018B99F /* ColumnViewController.swift */,
+			);
+			path = ColumnNavigation;
+			sourceTree = "<group>";
+		};
 		5A319A7324A0E2F0004C3475 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				5A319AB724A0EB6C004C3475 /* MainList */,
+				5AB6B32124B7876D0010420F /* Experiments */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -190,6 +204,14 @@
 				5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */,
 			);
 			path = Definitions;
+			sourceTree = "<group>";
+		};
+		5AB6B32124B7876D0010420F /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				5A251FD824B8823A0018B99F /* ColumnNavigation */,
+			);
+			path = Experiments;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A251FDA24B897C40018B99F /* ColumnViewController.swift in Sources */,
 				5A319A8424A0E2F1004C3475 /* MainListViewController.swift in Sources */,
 				5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */,
 				5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */,
@@ -334,6 +357,7 @@
 				5A8631B024A0F94000BFAF4D /* BaseTVCell.swift in Sources */,
 				5A319A8224A0E2F1004C3475 /* SceneDelegate.swift in Sources */,
 				5A319AB024A0E77B004C3475 /* UIView+Embed.swift in Sources */,
+				5AB6B32324B787A20010420F /* ColumnNavigationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
