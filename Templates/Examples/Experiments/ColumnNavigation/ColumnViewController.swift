@@ -16,7 +16,6 @@ class ColumnViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		ColumnListItem.registerCells(in: tableView)
 		dataSource = ColumnListDataSource(tableView: tableView)
 		dataSource?.reload()
 	}
@@ -25,8 +24,7 @@ class ColumnViewController: UITableViewController {
 		guard let item = dataSource?.itemIdentifier(for: indexPath)
 			else { return }
 		
-		let viewController = ColumnViewController()
-		viewController.title = item.title
+		let viewController = ColumnViewController(style: .insetGrouped)
 		switch item {
 			case .openModal: present(viewController, animated: true)
 			case .openDetail: navigationController?.pushViewController(viewController, animated: true)
@@ -49,8 +47,9 @@ enum ColumnListItem: DiffTVDataSourceItem {
 	}
 
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
+		let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
 		cell.textLabel?.text = "Open \(title)"
+		cell.contentView.heightAnchor.constraint(equalToConstant: 60).isActive = true
 		
 		if self != .openModal {
 			cell.accessoryType = .disclosureIndicator
@@ -59,7 +58,7 @@ enum ColumnListItem: DiffTVDataSourceItem {
 	}
 
 	static func registerCells(in tableView: UITableView) {
-		tableView.register(MainListCell.self)
+		
 	}
 }
 
@@ -72,7 +71,11 @@ class ColumnListDataSource: DiffTVDataSource<String, ColumnListItem> {
 	override func snapshot() -> ColumnListDataSourceSnapshot {
 		var snapshot = ColumnListDataSourceSnapshot()
 		snapshot.appendSections(["Section 1"])
-		snapshot.appendItems([.openDetail(i: 1), .openDetail(i: 2), .openModal], toSection: "Section 1")
+		snapshot.appendItems([.openDetail(i: 1), .openDetail(i: 2)], toSection: "Section 1")
+		
+		snapshot.appendSections(["Section 2"])
+		snapshot.appendItems([.openModal], toSection: "Section 2")
+
 
 		return snapshot
 	}

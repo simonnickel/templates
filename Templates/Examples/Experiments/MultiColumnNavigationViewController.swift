@@ -16,33 +16,56 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 		super.viewDidLoad()
 		
 		setupView()
-		
-		add(ColumnViewController())
+		add(ColumnViewController(style: .insetGrouped))
 	}
 	
 	
-	// MARK: - Add / Remove
+	// MARK: - Add
 	
-	func add(_ viewController: UIViewController) {
-		let navigation = ColumnNavigationController(rootViewController: viewController)
-		navigation.columnDelegate = self
-        add(child: navigation)
+	private var columnNavs: [ColumnNavigationController] = []
+	
+	func add(_ viewController: UIViewController, from indexFrom: Int? = nil) {
+		let index = indexFrom ?? 0
+		guard index <= columnNavs.count else {
+			fatalError()
+		}
+		
+		removeColumns(after: index)
+		append(createColumn(with: viewController))
     }
 	
-    private func add(child: UIViewController) {
-        addChild(child)
-		containerStack.addArrangedSubview(child.view)
-        child.didMove(toParent: self)
+    private func append(_ column: ColumnNavigationController) {
+		column.topViewController?.title = "Column \(columnNavs.count)"
+		
+		columnNavs.append(column)
+		column.columnIndex = columnNavs.count
+		
+        addChild(column)
+		containerStack.addArrangedSubview(column.view)
+        column.didMove(toParent: self)
     }
+	
+	
+	// MARK: - Remove
+	
+	private func removeColumns(after index: Int) {
+		if index < columnNavs.count {
+			for column in columnNavs[index...] {
+				remove(column)
+			}
+		}
+	}
 
-    func remove() {
-        guard parent != nil else {
-            return
-        }
+    private func remove(_ column: ColumnNavigationController) {
+		guard column.parent != nil,
+			let index = columnNavs.firstIndex(of: column)
+			else { return }
 
-        willMove(toParent: nil)
-        view.removeFromSuperview()
-        removeFromParent()
+		columnNavs.remove(at: index)
+		
+		column.willMove(toParent: nil)
+		column.view.removeFromSuperview()
+		column.removeFromParent()
     }
 	
 	
@@ -60,20 +83,34 @@ class MultiColumnNavigationViewController: UIViewController, ColumnNavigationDel
 	private func setupView() {
 		containerStack.embed(in: view)
 	}
+	
+	private func createColumn(with viewController: UIViewController) -> ColumnNavigationController {
+		let navigation = ColumnNavigationController(rootViewController: viewController)
+		navigation.columnDelegate = self
+		
+		return navigation
+	}
 }
 
+
+// MARK: - ColumnNavigationDelegate
+
 protocol ColumnNavigationDelegate: class {
-	func add(_ viewController: UIViewController)
+	func add(_ viewController: UIViewController, from index: Int?)
 }
+
+
+// MARK: - ColumnNavigationController
 
 class ColumnNavigationController: UINavigationController {
 	
 	weak var columnDelegate: ColumnNavigationDelegate?
+	var columnIndex: Int = 0
 	
 	override func pushViewController(_ viewController: UIViewController, animated: Bool) {
 		if let delegate = columnDelegate {
 			// TODO: Handle animated == false
-			delegate.add(viewController)
+			delegate.add(viewController, from: columnIndex)
 		} else {
 			super.pushViewController(viewController, animated: animated)
 		}
