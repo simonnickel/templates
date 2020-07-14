@@ -8,20 +8,27 @@
 
 import Foundation
 import UIKit
+import Combine
 
 enum MainListItem: DiffTVDataSourceItem {
-	case empty, entry(_: String)
+	
+	// This is just a dirty workaround to keep the enum simple.
+	static var publisher = CurrentValueSubject<Int, Never>(0)
+	
+	case fixed, dynamic(_: String)
 
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
 		switch self {
-			case .empty:
+			case .fixed:
 				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
-				cell.textLabel?.text = "Empty"
+				cell.title = "Empty"
 				return cell
-			case .entry(let title):
+			case .dynamic(let title):
 				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
-				cell.title = title
-				cell.subtitle = "Some Subtitle"
+				
+				CurrentValueSubject<String?, Never>(title).assign(to: \.title, on: cell).store(in: &cell.subscriptions)
+				MainListItem.publisher.map({ "\($0)" }).assign(to: \.subtitle, on: cell).store(in: &cell.subscriptions)
+				
 				return cell
 		}
 	}
@@ -40,7 +47,10 @@ class MainListDataSource: DiffTVDataSource<String, MainListItem> {
 	override func snapshot() -> MainListDataSourceSnapshot {
 		var snapshot = MainListDataSourceSnapshot()
 		snapshot.appendSections(["Section 1"])
-		snapshot.appendItems([.entry("Entry A"), .entry("Entry B")], toSection: "Section 1")
+		snapshot.appendItems([.fixed], toSection: "Section 1")
+		for i in 0...100 {
+			snapshot.appendItems([.dynamic("Entry \(i)")], toSection: "Section 1")
+		}
 
 		return snapshot
 	}
@@ -52,6 +62,13 @@ class MainListDataSource: DiffTVDataSource<String, MainListItem> {
 		let sections = snapshotCurrent.sectionIdentifiers
 		guard section < sections.count else { return nil }
 		return sections[section]
+	}
+	
+	
+	// MARK: - Update
+	
+	func select(_ indexPath: IndexPath) {
+		MainListItem.publisher.send(indexPath.row)
 	}
 
 }

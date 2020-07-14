@@ -19,5 +19,9 @@ class MainListViewController: UITableViewController {
 		dataSource = MainListDataSource(tableView: tableView)
 		dataSource?.reload()
 	}
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		dataSource?.select(indexPath)
+	}
 }
 

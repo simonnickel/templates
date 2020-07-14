@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Combine
 
 class MainListCell: UITableViewCell {
 
@@ -20,9 +21,17 @@ class MainListCell: UITableViewCell {
 		super.init(coder: coder)
 		setupView()
 	}
+	
+	override func prepareForReuse() {
+		subscriptions.removeAll()
+		title = nil
+		subtitle = nil
+	}
 
 
 	// MARK: - Values
+	
+	var subscriptions = Set<AnyCancellable>()
 
 	var title: String? {
 		set { labelTitle.text = newValue }
