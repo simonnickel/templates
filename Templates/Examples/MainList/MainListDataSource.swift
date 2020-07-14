@@ -12,8 +12,8 @@ import Combine
 
 enum MainListItem: DiffTVDataSourceItem {
 	
-	// This is just a dirty workaround to keep the enum simple.
-	static var publisher = CurrentValueSubject<Int, Never>(0)
+	// This as static var is just a dirty workaround to keep the enum simple.
+	static var publisherSelectedIndex = CurrentValueSubject<Int, Never>(0)
 	
 	case fixed, dynamic(_: String)
 
@@ -27,7 +27,7 @@ enum MainListItem: DiffTVDataSourceItem {
 				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
 				
 				CurrentValueSubject<String?, Never>(title).assign(to: \.title, on: cell).store(in: &cell.subscriptions)
-				MainListItem.publisher.map({ "\($0)" }).assign(to: \.subtitle, on: cell).store(in: &cell.subscriptions)
+				MainListItem.publisherSelectedIndex.map({ "\($0)" }).assign(to: \.subtitle, on: cell).store(in: &cell.subscriptions)
 				
 				return cell
 		}
@@ -67,8 +67,8 @@ class MainListDataSource: DiffTVDataSource<String, MainListItem> {
 	
 	// MARK: - Update
 	
-	func select(_ indexPath: IndexPath) {
-		MainListItem.publisher.send(indexPath.row)
+	func updateSelected(to indexPath: IndexPath) {
+		MainListItem.publisherSelectedIndex.send(indexPath.row)
 	}
 
 }

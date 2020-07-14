@@ -21,7 +21,7 @@ class MainListViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		dataSource?.select(indexPath)
+		dataSource?.updateSelected(to: indexPath)
 	}
 }
 
