@@ -18,19 +18,18 @@ enum MainListItem: DiffTVDataSourceItem {
 	case fixed, dynamic(_: String)
 
 	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
+		
 		switch self {
 			case .fixed:
-				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
 				cell.title = "Empty"
-				return cell
+			
 			case .dynamic(let title):
-				let cell = tableView.dequeueReusableCell(MainListCell.self, for: indexPath)
-				
 				CurrentValueSubject<String?, Never>(title).assign(to: \.title, on: cell).store(in: &cell.subscriptions)
 				MainListItem.publisherSelectedIndex.map({ "\($0)" }).assign(to: \.subtitle, on: cell).store(in: &cell.subscriptions)
-				
-				return cell
 		}
+		
+		return cell
 	}
 
 	static func registerCells(in tableView: UITableView) {
@@ -48,7 +47,7 @@ class MainListDataSource: DiffTVDataSource<String, MainListItem> {
 		var snapshot = MainListDataSourceSnapshot()
 		snapshot.appendSections(["Section 1"])
 		snapshot.appendItems([.fixed], toSection: "Section 1")
-		for i in 0...100 {
+		for i in 1...100 {
 			snapshot.appendItems([.dynamic("Entry \(i)")], toSection: "Section 1")
 		}
 
