@@ -14,10 +14,11 @@ class MainListViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		title = "Main List"
 
 		MainListItem.registerCells(in: tableView)
 		dataSource = MainListDataSource(tableView: tableView)
-		dataSource?.reload()
+		dataSource?.reload(animated: false)
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
