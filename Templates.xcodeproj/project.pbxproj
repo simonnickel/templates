@@ -23,6 +23,7 @@
 		5A8631B324A1019B00BFAF4D /* UIFont+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */; };
 		5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */; };
 		5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6B32424B78AAE0010420F /* UIButton+Action.swift */; };
+		5ACBEA2424C1C0E100522E96 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACBEA2324C1C0E100522E96 /* Dependencies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Definitions.swift"; sourceTree = "<group>"; };
 		5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Definitions.swift"; sourceTree = "<group>"; };
 		5AB6B32424B78AAE0010420F /* UIButton+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Action.swift"; sourceTree = "<group>"; };
+		5ACBEA2324C1C0E100522E96 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +117,7 @@
 		5A319A7E24A0E2F1004C3475 /* Templates */ = {
 			isa = PBXGroup;
 			children = (
-				5A319A7F24A0E2F1004C3475 /* AppDelegate.swift */,
-				5A319A8124A0E2F1004C3475 /* SceneDelegate.swift */,
+				5ACBEA2224C1C0BF00522E96 /* ProjectBase */,
 				5A319AB424A0EA15004C3475 /* Examples */,
 				5A8631B124A1017400BFAF4D /* Definitions */,
 				5A319AB324A0E9E6004C3475 /* UIKit+Extensions */,
@@ -190,6 +191,16 @@
 				5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */,
 			);
 			path = Definitions;
+			sourceTree = "<group>";
+		};
+		5ACBEA2224C1C0BF00522E96 /* ProjectBase */ = {
+			isa = PBXGroup;
+			children = (
+				5A319A7F24A0E2F1004C3475 /* AppDelegate.swift */,
+				5A319A8124A0E2F1004C3475 /* SceneDelegate.swift */,
+				5ACBEA2324C1C0E100522E96 /* Dependencies.swift */,
+			);
+			path = ProjectBase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,6 +336,7 @@
 				5A319A8424A0E2F1004C3475 /* MainListViewController.swift in Sources */,
 				5A8631B524A103BC00BFAF4D /* UIColor+Definitions.swift in Sources */,
 				5AB6B32524B78AAE0010420F /* UIButton+Action.swift in Sources */,
+				5ACBEA2424C1C0E100522E96 /* Dependencies.swift in Sources */,
 				5A8631B324A1019B00BFAF4D /* UIFont+Definitions.swift in Sources */,
 				5A319AB224A0E8DD004C3475 /* ReusableView.swift in Sources */,
 				5A8631AD24A0F46100BFAF4D /* DiffTVDataSource.swift in Sources */,
