@@ -12,6 +12,8 @@ import Combine
 
 /*
 	Helps adjusting views when the keyboard opens.
+	Not necessary for UITableViewController, it handles insets on its own.
+
 	Usage for a UIViewControlelr:
 		- Conform to protocol KeyboardAdjustable
 		- Call setupAdjustingToKeyboard() in viewDidLoad()
@@ -21,22 +23,27 @@ protocol KeyboardAdjustable where Self: UIViewController {
     var publisherKeyboardWillShow: AnyCancellable? { get set }
     var publisherKeyboardWillHide: AnyCancellable? { get set }
 
-    func handleKeyboardUpdate(frameHeight: CGFloat?)
+    func handleKeyboardUpdate(frameHeight: CGFloat?, animationDuration: TimeInterval)
 }
 
 extension KeyboardAdjustable {
     func setupAdjustingToKeyboard() {
         publisherKeyboardWillShow = NotificationCenter.default.publisher(for: UIControl.keyboardWillShowNotification, object: nil).sink(receiveValue: { [weak self] (notification) in
-            guard let strongSelf = self, let keyboardValue = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+            guard let strongSelf = self,
+				let keyboardValue = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+				let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
                 else { return }
 
             let keyboardViewEndFrame = strongSelf.view.convert(keyboardValue.cgRectValue, from: strongSelf.view.window)
-
-            strongSelf.handleKeyboardUpdate(frameHeight: keyboardViewEndFrame.height)
+			strongSelf.handleKeyboardUpdate(frameHeight: keyboardViewEndFrame.height, animationDuration: animationDuration)
         })
 
         publisherKeyboardWillHide = NotificationCenter.default.publisher(for: UIControl.keyboardWillHideNotification, object: nil).sink(receiveValue: { [weak self] (notification) in
-            self?.handleKeyboardUpdate(frameHeight: nil)
+			guard let strongSelf = self,
+				let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
+				else { return }
+			
+			strongSelf.handleKeyboardUpdate(frameHeight: nil, animationDuration: animationDuration)
         })
     }
 }
