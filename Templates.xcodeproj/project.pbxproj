@@ -125,7 +125,7 @@
 				5ACBEA3424C1CD4900522E96 /* README.md */,
 				5ACBEA2224C1C0BF00522E96 /* ProjectBase */,
 				5A319AB424A0EA15004C3475 /* Examples */,
-				5A8631B124A1017400BFAF4D /* Definitions */,
+				5A8631B124A1017400BFAF4D /* Appearance */,
 				5A319AB324A0E9E6004C3475 /* UIKit+Extensions */,
 				5A8631AE24A0F90400BFAF4D /* UIKit-Base-Inits */,
 				5A319A8824A0E2F2004C3475 /* Assets.xcassets */,
@@ -191,14 +191,14 @@
 			path = "UIKit-Base-Inits";
 			sourceTree = "<group>";
 		};
-		5A8631B124A1017400BFAF4D /* Definitions */ = {
+		5A8631B124A1017400BFAF4D /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
 				5A8631B224A1019B00BFAF4D /* UIFont+Definitions.swift */,
 				5A8631B424A103BC00BFAF4D /* UIColor+Definitions.swift */,
 				5A3544D724C57FCC002DD948 /* UIImage+Definitions.swift */,
 			);
-			path = Definitions;
+			path = Appearance;
 			sourceTree = "<group>";
 		};
 		5ACBEA2224C1C0BF00522E96 /* ProjectBase */ = {
