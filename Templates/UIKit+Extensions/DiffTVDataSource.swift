@@ -17,13 +17,19 @@ protocol DiffTVDataSourceItem: Hashable {
 
 }
 
+// Provide default implementation to allow customisation by overriding the cell provider.
+extension DiffTVDataSourceItem {
+	func cell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell { return UITableViewCell() }
+}
+
 
 class DiffTVDataSource<SectionIdentifierType: Hashable, ItemIdentifierType: DiffTVDataSourceItem>: UITableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType> {
 
-	init(tableView: UITableView) {
-		super.init(tableView: tableView) { (tableview: UITableView, indexPath: IndexPath, item: ItemIdentifierType) -> UITableViewCell? in
+	override init(tableView: UITableView, cellProvider: UITableViewDiffableDataSource<SectionIdentifierType, ItemIdentifierType>.CellProvider? = nil) {
+		let provider = cellProvider ?? { (tableview: UITableView, indexPath: IndexPath, item: ItemIdentifierType) -> UITableViewCell? in
 			item.cell(in: tableView, for: indexPath)
 		}
+		super.init(tableView: tableView, cellProvider: provider)
 	}
 
 	private var _snapshotCurrent: NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>?
