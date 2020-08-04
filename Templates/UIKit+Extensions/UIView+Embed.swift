@@ -9,24 +9,25 @@
 import Foundation
 import UIKit
 
-extension UIView {
+struct EmbedInsets {
+	let top: CGFloat?
+	let bottom: CGFloat?
+	let leading: CGFloat?
+	let trailing: CGFloat?
 
-	struct EmbedInsets {
-		let top: CGFloat?
-		let bottom: CGFloat?
-		let leading: CGFloat?
-		let trailing: CGFloat?
-
-		init(top: CGFloat? = nil, bottom: CGFloat? = nil, leading: CGFloat? = nil, trailing: CGFloat? = nil) {
-			self.top = top
-			self.bottom = bottom
-			self.leading = leading
-			self.trailing = trailing
-		}
-
-		static let zero: EmbedInsets = EmbedInsets(top: 0, bottom: 0, leading: 0, trailing: 0)
-		static func all(_ spacing: CGFloat) -> EmbedInsets { EmbedInsets(top: spacing, bottom: spacing, leading: spacing, trailing: spacing) }
+	init(top: CGFloat? = nil, bottom: CGFloat? = nil, leading: CGFloat? = nil, trailing: CGFloat? = nil) {
+		self.top = top
+		self.bottom = bottom
+		self.leading = leading
+		self.trailing = trailing
 	}
+
+	static let none: EmbedInsets = EmbedInsets(top: nil, bottom: nil, leading: nil, trailing: nil)
+	static let zero: EmbedInsets = EmbedInsets(top: 0, bottom: 0, leading: 0, trailing: 0)
+	static func all(_ spacing: CGFloat) -> EmbedInsets { EmbedInsets(top: spacing, bottom: spacing, leading: spacing, trailing: spacing) }
+}
+
+extension UIView {
 
 	func embed(in container: UIView, using layoutGuide: UILayoutGuide? = nil, insets: EmbedInsets = .zero) {
 		self.translatesAutoresizingMaskIntoConstraints = false
